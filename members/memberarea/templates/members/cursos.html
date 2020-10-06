@@ -1,0 +1,23 @@
+{% extends 'members/base.html' %}
+{% block main_content %}
+    {% if cursos %}
+    <h1>Seja bem-vindo(a)!</h1>
+    <p>Veja abaixo os cursos disponíveis para você.</p>
+        <table class="table table-hover table-responsive-lg">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Curso</th>
+                    <th scope="col">Descrição</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for c in cursos %}
+                  <tr>
+                      <td><a href="{% url 'curso' c.pk %}">{{ c.titulo }}</a></td>
+                      <td>{{ c.descricao }}</td>
+                  </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock %}

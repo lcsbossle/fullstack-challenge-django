@@ -1,0 +1,14 @@
+{% extends 'members/base.html' %}
+{% load markdown_extras %}
+{% block main_content %}
+    {% if aula %}
+        <h1>{{ aula.titulo }}</h1>
+        <p>{{ aula.conteudo | markdown | safe }}</p>
+    {% endif %}
+    {% if perms.memberarea.change_aula %}
+        <button type="button" class="btn btn-outline-dark" onclick="window.location.href='{% url 'edit_aula' aula.pk %}'">Editar</button>
+        {% endif %}
+        {% if perms.memberarea.delete_aula %}
+        <button type="button" class="btn btn-danger float-sm-right" onclick="window.location.href='{% url 'del_aula' aula.pk %}'">Deletar</button>
+    {% endif %}
+{% endblock %}

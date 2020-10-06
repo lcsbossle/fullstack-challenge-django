@@ -1,0 +1,31 @@
+{% extends "../members/base.html" %}
+{% block main_content %}
+    {% if form.errors %}
+      <p>O usuário e a senha não correspondem. Por favor, tente novamente.</p>
+    {% endif %}
+
+    {% if next %}
+      {% if user.is_authenticated %}
+        <p>Sua conta não possui acesso a esta página.</p>
+      {% else %}
+        <p>Por favor, faça login para acessar esta página.</p>
+      {% endif %}
+    {% endif %}
+    
+    
+    <div class="text-center vertical-align">
+        <form method="post" action="{% url 'login' %}">
+        {% csrf_token %}
+            <div class="form-group">
+                {{ form.username.label_tag }}
+                {{ form.username }}
+            </div>
+            <div class="form-group">
+                {{ form.password.label_tag }}
+                {{ form.password }}
+            </div>
+            <input type="submit" class=" btn btn-primary" value="login" />
+            <input type="hidden" name="next" value="{{ next }}" />
+        </form>
+    </div>
+{% endblock %}

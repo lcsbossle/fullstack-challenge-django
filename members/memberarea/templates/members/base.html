@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v4.1.1">
+    <title>Área do Aluno</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/dashboard/">
+
+    <!-- Bootstrap core CSS -->
+<link href="../../static/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="../../static/dashboard.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+        {% if user.is_authenticated %}
+            <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">Bem vindo(a), {{user.get_short_name}}</a>
+        {% else %}
+            <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="{% url 'login'%}?next={{request.path}}">Login</a>
+        {% endif %}
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <a class="nav-link" href="{% url 'logout'%}?next={{request.path}}">Sair</a>
+    </li>
+  </ul>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="sidebar-sticky pt-3">
+        <ul class="nav flex-column">
+        {% if cursos %}
+            {% for c in cursos %}
+              <li class="nav-item">
+                <a class="nav-link active" href="{% url 'curso' c.pk %}">
+                  <span data-feather="home"></span>
+                  {{ c.titulo }} <span class="sr-only">(current)</span>
+                </a>
+              </li>
+            {% endfor %}
+        {% endif %}
+        </ul>
+
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+          <span>Opções</span>
+          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+            <span data-feather="plus-circle"></span>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'cursos' %}">
+              <span data-feather="file-text"></span>
+              Ver cursos
+            </a>
+          </li>
+          {% if perms.memberarea.add_curso %}
+          <li class="nav-item">
+              <a class="nav-link" href="{% url 'add_curso' %}">
+                  <span data-feather="file-text"></span>
+                  Criar curso
+              </a>
+          </li>
+          {% endif %}
+          {% if perms.memberarea.add_aula %}
+          <li class="nav-item">
+              <a class="nav-link" href="{% url 'add_aula' %}">
+                  <span data-feather="file-text"></span>
+                  Criar aula
+              </a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+        {% block main_content %}
+        {% endblock %}
+    </main>
+  </div>
+</div>
+</body>
+</html>

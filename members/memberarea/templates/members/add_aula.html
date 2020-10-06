@@ -1,0 +1,24 @@
+{% extends 'members/base.html' %}
+{% block main_content %}
+    <h1>Cadastrar aula</h1>
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+    <form name="fmr_cur" method="POST">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {% for field in form %}
+            <div>
+                {{ field.label_tag }}
+                {{ field }}
+                {{ field.errors }}
+            </div>
+        {% endfor %}
+        <div style="padding: 20px;">
+            <button type="submit" class="btn btn-outline-success">Salvar</button>
+            <button type="button" class="btn btn-outline-dark" onclick="window.location.href='{% url 'home' %}'">Retornar</button>
+        </div>
+    </form>
+{% endblock %}

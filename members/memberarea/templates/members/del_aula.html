@@ -1,0 +1,19 @@
+{% extends 'members/base.html' %}
+{% block main_content %}
+    <h1 style="margin-top: 50px">Excluir aula?</h1>
+    <h3 style="margin-top: 10px">Atenção: Isso excluirá todos os registros dessa aula!</h3>
+    {% if messages %}
+        <div style="color: red;">
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+    <form method="POST">
+        {% csrf_token %}
+        <div style="padding: 20px;">
+            <button type="button" class="btn btn-outline-dark" onclick="window.location.href='{% url 'aula' aula.pk %}'">Retornar</button>
+            <button type="submit" class="btn btn-danger" style="margin-left: 15px">Sim</button>
+        </div>
+    </form>
+{% endblock %}

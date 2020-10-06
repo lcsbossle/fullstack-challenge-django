@@ -1,0 +1,31 @@
+{% extends 'members/base.html' %}
+{% block main_content %}
+    {% if curso %}
+        <h1>{{ curso.titulo}}</h1>
+        <p>{{ curso.descricao }}</p>
+    {% endif %}
+    {% if sequencia %}
+        <table class="table table-hover table-responsive-lg">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Aula</th>
+                    <th scope="col">Descrição</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in sequencia %}
+                  <tr>
+                      <td><a href="{% url 'aula' s.aula.pk %}">{{ s.aula.titulo }}</a></td>
+                      <td>{{ s.aula.descricao }}</td>
+                  </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    {% if perms.memberarea.change_curso %}
+        <button type="button" class="btn btn-outline-dark" onclick="window.location.href='{% url 'edit_curso' curso.pk %}'">Editar</button>
+        {% endif %}
+        {% if perms.memberarea.delete_curso %}
+        <button type="button" class="btn btn-danger float-sm-right" onclick="window.location.href='{% url 'del_curso' curso.pk %}'">Deletar</button>
+    {% endif %}
+{% endblock %}
